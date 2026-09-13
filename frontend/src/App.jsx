@@ -13,7 +13,6 @@ import RegisterPage from './pages/RegisterPage';
 import GuardiansPage from './pages/GuardiansPage';
 import SOSModal from './components/SOSModal';
 import EmergencyPopNotification from './components/EmergencyPopNotification';
-import AIVoiceAssistant from './components/AIVoiceAssistant';
 import { api } from './services/api';
 import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
@@ -250,12 +249,6 @@ function MainAppContent() {
       <EmergencyPopNotification
         alertData={sosNotificationData}
         onClose={() => setSosNotificationData(null)}
-      />
-
-      {/* Global AI Voice Assistant — Activated on Login to process User Commands */}
-      <AIVoiceAssistant
-        user={user}
-        onOpenSOS={handleOpenSOS}
       />
 
     </div>

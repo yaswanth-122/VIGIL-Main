@@ -160,6 +160,45 @@
   ],
   "journeys": [
     {
+      "id": "jrn_1789287916003",
+      "user_id": "usr_default",
+      "user_name": "Alex Rivera",
+      "name": "Safe Travel Commute",
+      "start_location": {
+        "name": "GPS (12.8705, 80.2242)",
+        "lat": 12.870472999999999,
+        "lng": 80.22423226666668
+      },
+      "destination": {
+        "name": "Marina Beach",
+        "lat": 13.0475,
+        "lng": 80.2824
+      },
+      "status": "active",
+      "mode": "safety",
+      "start_time": "2026-09-13T08:25:16.003Z",
+      "end_time": null,
+      "duration_mins": 45,
+      "safety_timeout_mins": 4,
+      "no_movement_threshold_mins": 4,
+      "monitoring_status": "SAFE",
+      "trusted_contact_id": "tc_1789053835417",
+      "risk_score": 0,
+      "risk_level": "GREEN",
+      "is_offline": false,
+      "break_until": null,
+      "simulated_anomalies": [],
+      "safety_log": [
+        {
+          "id": "log_1789287916003_start",
+          "event": "Journey Started",
+          "details": "Journey initiated with 4 min no-movement threshold.",
+          "timestamp": "2026-09-13T08:25:16.003Z"
+        }
+      ],
+      "created_at": "2026-09-13T08:25:16.003Z"
+    },
+    {
       "id": "jrn_1789287404534",
       "user_id": "usr_default",
       "user_name": "Alex Rivera",
@@ -174,10 +213,10 @@
         "lat": 13.0475,
         "lng": 80.2824
       },
-      "status": "active",
+      "status": "cancelled",
       "mode": "safety",
       "start_time": "2026-09-13T08:16:44.534Z",
-      "end_time": null,
+      "end_time": "2026-09-13T08:25:16.003Z",
       "duration_mins": 45,
       "safety_timeout_mins": 5,
       "no_movement_threshold_mins": 5,
@@ -1066,6 +1105,18 @@
       "battery": 95,
       "network": "online",
       "timestamp": "2026-09-13T08:16:44.534Z"
+    },
+    {
+      "id": "loc_1789287916003",
+      "journey_id": "jrn_1789287916003",
+      "latitude": 12.870472999999999,
+      "longitude": 80.22423226666668,
+      "accuracy": 10,
+      "speed": 0,
+      "heading": 0,
+      "battery": 95,
+      "network": "online",
+      "timestamp": "2026-09-13T08:25:16.003Z"
     }
   ],
   "risk_events": [],
