@@ -214,6 +214,18 @@ export default function ActiveJourneyPage({ onOpenSOS }) {
     }
   };
 
+  const handleUpdateTimeoutMins = async (mins) => {
+    if (!journey) return;
+    try {
+      const res = await api.updateSafetyTimeout(journey.id, mins);
+      if (res.success) {
+        setJourney(prev => prev ? { ...prev, safety_timeout_mins: mins } : prev);
+      }
+    } catch (err) {
+      console.error('Error updating safety timeout:', err);
+    }
+  };
+
   if (loading) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-20 text-center space-y-4">
@@ -410,9 +422,11 @@ export default function ActiveJourneyPage({ onOpenSOS }) {
         triggerReason={riskEval.reasons?.map(r => r.text).join(', ')}
         timeoutMinutes={journey.safety_timeout_mins || 10}
         onRespondSafe={handleRespondSafe}
+        onRespondUnsafe={handleRespondUnsafe}
         onRespondBreak={handleRespondBreak}
         onRespondExtend={(mins) => alert(`Journey extended by ${mins} minutes.`)}
         onTriggerSOS={onOpenSOS}
+        onNoResponse={handleNoResponse}
         onUpdateTimeoutMins={handleUpdateTimeoutMins}
       />
 

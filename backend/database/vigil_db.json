@@ -181,10 +181,10 @@
       "duration_mins": 45,
       "safety_timeout_mins": 4,
       "no_movement_threshold_mins": 4,
-      "monitoring_status": "SAFE",
+      "monitoring_status": "EMERGENCY",
       "trusted_contact_id": "tc_1789053835417",
-      "risk_score": 0,
-      "risk_level": "GREEN",
+      "risk_score": 100,
+      "risk_level": "RED",
       "is_offline": false,
       "break_until": null,
       "simulated_anomalies": [],
@@ -1122,6 +1122,49 @@
   "risk_events": [],
   "safety_checks": [],
   "alerts": [
+    {
+      "id": "sos_1789288190084",
+      "journey_id": "jrn_1789287916003",
+      "user_name": "Alex Rivera",
+      "user_phone": "+1 (555) 234-5678",
+      "alert_type": "EMERGENCY_SOS",
+      "message": "🚨 CRITICAL SOS DISPATCHED BY Alex Rivera! Pop notification sent to emergency mobile numbers. Google Maps location pin: https://www.google.com/maps?q=12.9715987,77.5945627",
+      "risk_score": 100,
+      "status": "active",
+      "is_silent": false,
+      "timestamp": "2026-09-13T08:29:50.084Z",
+      "location": {
+        "lat": 12.9715987,
+        "lng": 77.5945627,
+        "name": "Live GPS Pin (High Precision)",
+        "google_maps_url": "https://www.google.com/maps?q=12.9715987,77.5945627",
+        "google_maps_embed": "https://maps.google.com/maps?q=12.9715987,77.5945627&z=16&output=embed"
+      },
+      "notified_guardians": [
+        {
+          "name": "Sarah Rivera",
+          "phone": "+1 (555) 987-6543",
+          "relationship": "Mother",
+          "is_primary": false,
+          "push_status": "POPUP_NOTIFIED"
+        },
+        {
+          "name": "Rajesh Kumar",
+          "phone": "+91 98765 43210",
+          "relationship": "Father",
+          "is_primary": false,
+          "push_status": "POPUP_NOTIFIED"
+        },
+        {
+          "name": "Hari Kiran",
+          "phone": "+917659834470",
+          "relationship": "Primary Guardian",
+          "is_primary": true,
+          "push_status": "POPUP_NOTIFIED"
+        }
+      ],
+      "emergency_phone": "+917659834470"
+    },
     {
       "id": "sos_1789287579373",
       "journey_id": "jrn_1789287404534",
