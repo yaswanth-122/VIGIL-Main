@@ -50,15 +50,38 @@ app.get('/health', (req, res) => {
 });
 
 // Serve compiled static React Vite frontend assets for single-service deployment
-const distPath = path.join(__dirname, '../frontend/dist');
 const fs = require('fs');
-if (fs.existsSync(distPath)) {
+
+// Try multiple possible dist locations (handles both local dev and Render/cloud deployments)
+const possibleDistPaths = [
+  path.join(__dirname, '../frontend/dist'),         // normal: backend/ -> ../frontend/dist
+  path.join(process.cwd(), 'frontend/dist'),        // Render: project root -> frontend/dist
+  path.join(process.cwd(), 'dist'),                 // fallback: root dist
+  path.join(__dirname, 'dist'),                     // fallback: same dir dist
+];
+
+const distPath = possibleDistPaths.find(p => {
+  const exists = fs.existsSync(p) && fs.existsSync(path.join(p, 'index.html'));
+  console.log(`Checking dist path: ${p} => ${exists ? '✅ FOUND' : '❌ not found'}`);
+  return exists;
+});
+
+if (distPath) {
+  console.log(`✅ Serving static frontend from: ${distPath}`);
   app.use(express.static(distPath));
   app.get('*', (req, res, next) => {
     if (req.isApiCall || req.path.startsWith('/api') || req.path === '/health') {
       return next();
     }
     res.sendFile(path.join(distPath, 'index.html'));
+  });
+} else {
+  console.warn('⚠️  frontend/dist not found. Frontend will not be served. Run build first.');
+  app.get('*', (req, res, next) => {
+    if (req.isApiCall || req.path.startsWith('/api') || req.path === '/health') {
+      return next();
+    }
+    res.status(503).send('<h2>VIGIL frontend build not found. Please run: npm run build</h2>');
   });
 }
 
