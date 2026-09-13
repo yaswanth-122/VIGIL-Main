@@ -913,6 +913,49 @@
   "safety_checks": [],
   "alerts": [
     {
+      "id": "sos_1789286281906",
+      "journey_id": "active_emergency",
+      "user_name": "Alex Rivera",
+      "user_phone": "+1 (555) 234-5678",
+      "alert_type": "EMERGENCY_SOS",
+      "message": "🚨 CRITICAL SOS DISPATCHED BY Alex Rivera! Pop notification sent to emergency mobile numbers. Google Maps location pin: https://www.google.com/maps?q=12.870453300000001,80.2241554",
+      "risk_score": 100,
+      "status": "active",
+      "is_silent": false,
+      "timestamp": "2026-09-13T07:58:01.906Z",
+      "location": {
+        "lat": 12.870453300000001,
+        "lng": 80.2241554,
+        "name": "GPS Location (12.8705°, 80.2242°)",
+        "google_maps_url": "https://www.google.com/maps?q=12.870453300000001,80.2241554",
+        "google_maps_embed": "https://maps.google.com/maps?q=12.870453300000001,80.2241554&z=16&output=embed"
+      },
+      "notified_guardians": [
+        {
+          "name": "Sarah Rivera",
+          "phone": "+1 (555) 987-6543",
+          "relationship": "Mother",
+          "is_primary": false,
+          "push_status": "POPUP_NOTIFIED"
+        },
+        {
+          "name": "Rajesh Kumar",
+          "phone": "+91 98765 43210",
+          "relationship": "Father",
+          "is_primary": false,
+          "push_status": "POPUP_NOTIFIED"
+        },
+        {
+          "name": "Hari Kiran",
+          "phone": "+917659834470",
+          "relationship": "Primary Guardian",
+          "is_primary": true,
+          "push_status": "POPUP_NOTIFIED"
+        }
+      ],
+      "emergency_phone": "+917659834470"
+    },
+    {
       "id": "sos_1789072747873",
       "journey_id": "jrn_1789072747865",
       "user_name": "Yashwant Ongole",
