@@ -181,6 +181,46 @@ export default function AIVoiceAssistant({ user, onOpenSOS }) {
       navigate('/');
       setTranscript('');
     }
+    // Conversational Greetings & AI Replies
+    else if (cmd.includes('hello') || cmd.includes('hi') || cmd.includes('hey vigil') || cmd.includes('hey')) {
+      setLastCommand('Greeting: Hello / Hi');
+      const nameStr = user?.name ? user.name.split(' ')[0] : 'there';
+      speakVoiceAnnouncement(`Hello ${nameStr}! I am VIGIL, your AI virtual safety companion. I am monitoring your journey and ready for your commands.`);
+      setTranscript('');
+    }
+    else if (cmd.includes('good morning')) {
+      setLastCommand('Greeting: Good Morning');
+      const nameStr = user?.name ? user.name.split(' ')[0] : 'there';
+      speakVoiceAnnouncement(`Good morning ${nameStr}! Wishing you a safe day ahead. VIGIL safety monitoring is active.`);
+      setTranscript('');
+    }
+    else if (cmd.includes('good afternoon')) {
+      setLastCommand('Greeting: Good Afternoon');
+      const nameStr = user?.name ? user.name.split(' ')[0] : 'there';
+      speakVoiceAnnouncement(`Good afternoon ${nameStr}! VIGIL is active and keeping track of your route.`);
+      setTranscript('');
+    }
+    else if (cmd.includes('good evening') || cmd.includes('good night')) {
+      setLastCommand('Greeting: Good Evening');
+      const nameStr = user?.name ? user.name.split(' ')[0] : 'there';
+      speakVoiceAnnouncement(`Good evening ${nameStr}! Nighttime journey safety mode is active.`);
+      setTranscript('');
+    }
+    else if (cmd.includes('how are you') || cmd.includes('how do you do')) {
+      setLastCommand('Greeting: How Are You');
+      speakVoiceAnnouncement("I am functioning at full capacity! All telemetry systems are online, and your primary guardian Hari Kiran is linked.");
+      setTranscript('');
+    }
+    else if (cmd.includes('thank you') || cmd.includes('thanks')) {
+      setLastCommand('Greeting: Thank You');
+      speakVoiceAnnouncement("You're very welcome! Stay safe out there. VIGIL has your back.");
+      setTranscript('');
+    }
+    else if (cmd.includes('who are you') || cmd.includes('what are you')) {
+      setLastCommand('Greeting: Who Are You');
+      speakVoiceAnnouncement("I am VIGIL, an AI-assisted virtual safety companion designed by Team BUG BUSTERS to protect your travel journeys.");
+      setTranscript('');
+    }
   };
 
   if (!user) return null;
@@ -253,6 +293,18 @@ export default function AIVoiceAssistant({ user, onOpenSOS }) {
             <div className="space-y-1.5">
               <div className="text-[10px] font-bold text-gray-400 uppercase">Available Voice Commands (Click or Speak):</div>
               <div className="grid grid-cols-2 gap-1.5 text-[10px]">
+                <button
+                  onClick={() => processVoiceCommand('hello')}
+                  className="py-1.5 px-2 rounded-lg bg-cyan-600/20 hover:bg-cyan-600/30 border border-cyan-500/40 text-cyan-300 font-bold text-left truncate"
+                >
+                  💬 "Hello VIGIL"
+                </button>
+                <button
+                  onClick={() => processVoiceCommand('how are you')}
+                  className="py-1.5 px-2 rounded-lg bg-purple-600/20 hover:bg-purple-600/30 border border-purple-500/40 text-purple-300 font-bold text-left truncate"
+                >
+                  💬 "How are you?"
+                </button>
                 <button
                   onClick={() => processVoiceCommand('start journey')}
                   className="py-1.5 px-2 rounded-lg bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/40 text-blue-300 font-bold text-left truncate"

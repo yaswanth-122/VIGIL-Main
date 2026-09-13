@@ -160,6 +160,45 @@
   ],
   "journeys": [
     {
+      "id": "jrn_1789286784796",
+      "user_id": "usr_default",
+      "user_name": "Alex Rivera",
+      "name": "Safe Travel Commute",
+      "start_location": {
+        "name": "GPS (12.8705, 80.2241)",
+        "lat": 12.870474450563512,
+        "lng": 80.22412331325008
+      },
+      "destination": {
+        "name": "Chennai Central Railway Station",
+        "lat": 13.0827,
+        "lng": 80.2707
+      },
+      "status": "active",
+      "mode": "safety",
+      "start_time": "2026-09-13T08:06:24.796Z",
+      "end_time": null,
+      "duration_mins": 62,
+      "safety_timeout_mins": 4,
+      "no_movement_threshold_mins": 4,
+      "monitoring_status": "SAFE",
+      "trusted_contact_id": "tc_1789053835417",
+      "risk_score": 0,
+      "risk_level": "GREEN",
+      "is_offline": false,
+      "break_until": null,
+      "simulated_anomalies": [],
+      "safety_log": [
+        {
+          "id": "log_1789286784796_start",
+          "event": "Journey Started",
+          "details": "Journey initiated with 4 min no-movement threshold.",
+          "timestamp": "2026-09-13T08:06:24.796Z"
+        }
+      ],
+      "created_at": "2026-09-13T08:06:24.796Z"
+    },
+    {
       "id": "jrn_1789072747865",
       "user_id": "usr_1789054150366",
       "user_name": "Yashwant Ongole",
@@ -907,11 +946,281 @@
       "battery": 95,
       "network": "online",
       "timestamp": "2026-09-10T20:39:07.865Z"
+    },
+    {
+      "id": "loc_1789286784796",
+      "journey_id": "jrn_1789286784796",
+      "latitude": 12.870474450563512,
+      "longitude": 80.22412331325008,
+      "accuracy": 10,
+      "speed": 0,
+      "heading": 0,
+      "battery": 95,
+      "network": "online",
+      "timestamp": "2026-09-13T08:06:24.796Z"
     }
   ],
   "risk_events": [],
   "safety_checks": [],
   "alerts": [
+    {
+      "id": "sos_1789286706813",
+      "journey_id": "active_emergency",
+      "user_name": "Alex Rivera",
+      "user_phone": "+1 (555) 234-5678",
+      "alert_type": "EMERGENCY_SOS",
+      "message": "🚨 CRITICAL SOS DISPATCHED BY Alex Rivera! Pop notification sent to emergency mobile numbers. Google Maps location pin: https://www.google.com/maps?q=12.9715987,77.5945627",
+      "risk_score": 100,
+      "status": "active",
+      "is_silent": false,
+      "timestamp": "2026-09-13T08:05:06.813Z",
+      "location": {
+        "lat": 12.9715987,
+        "lng": 77.5945627,
+        "name": "Live GPS Pin (High Precision)",
+        "google_maps_url": "https://www.google.com/maps?q=12.9715987,77.5945627",
+        "google_maps_embed": "https://maps.google.com/maps?q=12.9715987,77.5945627&z=16&output=embed"
+      },
+      "notified_guardians": [
+        {
+          "name": "Sarah Rivera",
+          "phone": "+1 (555) 987-6543",
+          "relationship": "Mother",
+          "is_primary": false,
+          "push_status": "POPUP_NOTIFIED"
+        },
+        {
+          "name": "Rajesh Kumar",
+          "phone": "+91 98765 43210",
+          "relationship": "Father",
+          "is_primary": false,
+          "push_status": "POPUP_NOTIFIED"
+        },
+        {
+          "name": "Hari Kiran",
+          "phone": "+917659834470",
+          "relationship": "Primary Guardian",
+          "is_primary": true,
+          "push_status": "POPUP_NOTIFIED"
+        }
+      ],
+      "emergency_phone": "+917659834470"
+    },
+    {
+      "id": "sos_1789286705830",
+      "journey_id": "active_emergency",
+      "user_name": "Alex Rivera",
+      "user_phone": "+1 (555) 234-5678",
+      "alert_type": "EMERGENCY_SOS",
+      "message": "🚨 CRITICAL SOS DISPATCHED BY Alex Rivera! Pop notification sent to emergency mobile numbers. Google Maps location pin: https://www.google.com/maps?q=12.9715987,77.5945627",
+      "risk_score": 100,
+      "status": "active",
+      "is_silent": false,
+      "timestamp": "2026-09-13T08:05:05.830Z",
+      "location": {
+        "lat": 12.9715987,
+        "lng": 77.5945627,
+        "name": "Live GPS Pin (High Precision)",
+        "google_maps_url": "https://www.google.com/maps?q=12.9715987,77.5945627",
+        "google_maps_embed": "https://maps.google.com/maps?q=12.9715987,77.5945627&z=16&output=embed"
+      },
+      "notified_guardians": [
+        {
+          "name": "Sarah Rivera",
+          "phone": "+1 (555) 987-6543",
+          "relationship": "Mother",
+          "is_primary": false,
+          "push_status": "POPUP_NOTIFIED"
+        },
+        {
+          "name": "Rajesh Kumar",
+          "phone": "+91 98765 43210",
+          "relationship": "Father",
+          "is_primary": false,
+          "push_status": "POPUP_NOTIFIED"
+        },
+        {
+          "name": "Hari Kiran",
+          "phone": "+917659834470",
+          "relationship": "Primary Guardian",
+          "is_primary": true,
+          "push_status": "POPUP_NOTIFIED"
+        }
+      ],
+      "emergency_phone": "+917659834470"
+    },
+    {
+      "id": "sos_1789286705807",
+      "journey_id": "active_emergency",
+      "user_name": "Alex Rivera",
+      "user_phone": "+1 (555) 234-5678",
+      "alert_type": "EMERGENCY_SOS",
+      "message": "🚨 CRITICAL SOS DISPATCHED BY Alex Rivera! Pop notification sent to emergency mobile numbers. Google Maps location pin: https://www.google.com/maps?q=12.9715987,77.5945627",
+      "risk_score": 100,
+      "status": "active",
+      "is_silent": false,
+      "timestamp": "2026-09-13T08:05:05.807Z",
+      "location": {
+        "lat": 12.9715987,
+        "lng": 77.5945627,
+        "name": "Live GPS Pin (High Precision)",
+        "google_maps_url": "https://www.google.com/maps?q=12.9715987,77.5945627",
+        "google_maps_embed": "https://maps.google.com/maps?q=12.9715987,77.5945627&z=16&output=embed"
+      },
+      "notified_guardians": [
+        {
+          "name": "Sarah Rivera",
+          "phone": "+1 (555) 987-6543",
+          "relationship": "Mother",
+          "is_primary": false,
+          "push_status": "POPUP_NOTIFIED"
+        },
+        {
+          "name": "Rajesh Kumar",
+          "phone": "+91 98765 43210",
+          "relationship": "Father",
+          "is_primary": false,
+          "push_status": "POPUP_NOTIFIED"
+        },
+        {
+          "name": "Hari Kiran",
+          "phone": "+917659834470",
+          "relationship": "Primary Guardian",
+          "is_primary": true,
+          "push_status": "POPUP_NOTIFIED"
+        }
+      ],
+      "emergency_phone": "+917659834470"
+    },
+    {
+      "id": "sos_1789286705682",
+      "journey_id": "active_emergency",
+      "user_name": "Alex Rivera",
+      "user_phone": "+1 (555) 234-5678",
+      "alert_type": "EMERGENCY_SOS",
+      "message": "🚨 CRITICAL SOS DISPATCHED BY Alex Rivera! Pop notification sent to emergency mobile numbers. Google Maps location pin: https://www.google.com/maps?q=12.9715987,77.5945627",
+      "risk_score": 100,
+      "status": "active",
+      "is_silent": false,
+      "timestamp": "2026-09-13T08:05:05.682Z",
+      "location": {
+        "lat": 12.9715987,
+        "lng": 77.5945627,
+        "name": "Live GPS Pin (High Precision)",
+        "google_maps_url": "https://www.google.com/maps?q=12.9715987,77.5945627",
+        "google_maps_embed": "https://maps.google.com/maps?q=12.9715987,77.5945627&z=16&output=embed"
+      },
+      "notified_guardians": [
+        {
+          "name": "Sarah Rivera",
+          "phone": "+1 (555) 987-6543",
+          "relationship": "Mother",
+          "is_primary": false,
+          "push_status": "POPUP_NOTIFIED"
+        },
+        {
+          "name": "Rajesh Kumar",
+          "phone": "+91 98765 43210",
+          "relationship": "Father",
+          "is_primary": false,
+          "push_status": "POPUP_NOTIFIED"
+        },
+        {
+          "name": "Hari Kiran",
+          "phone": "+917659834470",
+          "relationship": "Primary Guardian",
+          "is_primary": true,
+          "push_status": "POPUP_NOTIFIED"
+        }
+      ],
+      "emergency_phone": "+917659834470"
+    },
+    {
+      "id": "sos_1789286705673",
+      "journey_id": "active_emergency",
+      "user_name": "Alex Rivera",
+      "user_phone": "+1 (555) 234-5678",
+      "alert_type": "EMERGENCY_SOS",
+      "message": "🚨 CRITICAL SOS DISPATCHED BY Alex Rivera! Pop notification sent to emergency mobile numbers. Google Maps location pin: https://www.google.com/maps?q=12.9715987,77.5945627",
+      "risk_score": 100,
+      "status": "active",
+      "is_silent": false,
+      "timestamp": "2026-09-13T08:05:05.673Z",
+      "location": {
+        "lat": 12.9715987,
+        "lng": 77.5945627,
+        "name": "Live GPS Pin (High Precision)",
+        "google_maps_url": "https://www.google.com/maps?q=12.9715987,77.5945627",
+        "google_maps_embed": "https://maps.google.com/maps?q=12.9715987,77.5945627&z=16&output=embed"
+      },
+      "notified_guardians": [
+        {
+          "name": "Sarah Rivera",
+          "phone": "+1 (555) 987-6543",
+          "relationship": "Mother",
+          "is_primary": false,
+          "push_status": "POPUP_NOTIFIED"
+        },
+        {
+          "name": "Rajesh Kumar",
+          "phone": "+91 98765 43210",
+          "relationship": "Father",
+          "is_primary": false,
+          "push_status": "POPUP_NOTIFIED"
+        },
+        {
+          "name": "Hari Kiran",
+          "phone": "+917659834470",
+          "relationship": "Primary Guardian",
+          "is_primary": true,
+          "push_status": "POPUP_NOTIFIED"
+        }
+      ],
+      "emergency_phone": "+917659834470"
+    },
+    {
+      "id": "sos_1789286705207",
+      "journey_id": "active_emergency",
+      "user_name": "Alex Rivera",
+      "user_phone": "+1 (555) 234-5678",
+      "alert_type": "EMERGENCY_SOS",
+      "message": "🚨 CRITICAL SOS DISPATCHED BY Alex Rivera! Pop notification sent to emergency mobile numbers. Google Maps location pin: https://www.google.com/maps?q=12.9715987,77.5945627",
+      "risk_score": 100,
+      "status": "active",
+      "is_silent": false,
+      "timestamp": "2026-09-13T08:05:05.207Z",
+      "location": {
+        "lat": 12.9715987,
+        "lng": 77.5945627,
+        "name": "Live GPS Pin (High Precision)",
+        "google_maps_url": "https://www.google.com/maps?q=12.9715987,77.5945627",
+        "google_maps_embed": "https://maps.google.com/maps?q=12.9715987,77.5945627&z=16&output=embed"
+      },
+      "notified_guardians": [
+        {
+          "name": "Sarah Rivera",
+          "phone": "+1 (555) 987-6543",
+          "relationship": "Mother",
+          "is_primary": false,
+          "push_status": "POPUP_NOTIFIED"
+        },
+        {
+          "name": "Rajesh Kumar",
+          "phone": "+91 98765 43210",
+          "relationship": "Father",
+          "is_primary": false,
+          "push_status": "POPUP_NOTIFIED"
+        },
+        {
+          "name": "Hari Kiran",
+          "phone": "+917659834470",
+          "relationship": "Primary Guardian",
+          "is_primary": true,
+          "push_status": "POPUP_NOTIFIED"
+        }
+      ],
+      "emergency_phone": "+917659834470"
+    },
     {
       "id": "sos_1789286281906",
       "journey_id": "active_emergency",
