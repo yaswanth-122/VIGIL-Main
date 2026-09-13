@@ -16,6 +16,25 @@ function extractUser(req, db) {
   return db.users[db.users.length - 1] || db.users[0] || { id: 'usr_default', name: 'Alex Rivera' };
 }
 
+// Helper to robustly find target journey by ID or fallback to active journey
+function findTargetJourney(db, idParam, user) {
+  if (!idParam || idParam === 'active') {
+    return (
+      db.journeys.find(j => j.status === 'active' && (j.user_id === user.id || j.user_id === 'usr_default')) ||
+      db.journeys.find(j => j.status === 'active') ||
+      db.journeys[0] ||
+      null
+    );
+  }
+  return (
+    db.journeys.find(j => j.id === idParam) ||
+    db.journeys.find(j => j.status === 'active' && (j.user_id === user.id || j.user_id === 'usr_default')) ||
+    db.journeys.find(j => j.status === 'active') ||
+    db.journeys[0] ||
+    null
+  );
+}
+
 // GET /api/user/profile
 exports.getUserProfile = (req, res) => {
   const db = readDb();
@@ -53,9 +72,9 @@ exports.updateUserProfile = (req, res) => {
 exports.getActiveJourney = (req, res) => {
   const db = readDb();
   const user = extractUser(req, db);
-  const active = db.journeys.find(j => j.status === 'active' && (j.user_id === user.id || j.user_id === 'usr_default'));
+  const active = findTargetJourney(db, 'active', user);
 
-  if (!active) {
+  if (!active || active.status !== 'active') {
     return res.json({ success: true, journey: null });
   }
 
@@ -149,7 +168,9 @@ exports.createJourney = (req, res) => {
 // GET /api/journeys/:id
 exports.getJourneyById = (req, res) => {
   const db = readDb();
-  const journey = db.journeys.find(j => j.id === req.params.id);
+  const user = extractUser(req, db);
+  const journey = findTargetJourney(db, req.params.id, user);
+
   if (!journey) {
     return res.status(404).json({ success: false, message: 'Journey not found' });
   }
@@ -171,7 +192,9 @@ exports.getJourneyById = (req, res) => {
 // POST /api/journeys/:id/end
 exports.endJourney = (req, res) => {
   const db = readDb();
-  const journey = db.journeys.find(j => j.id === req.params.id);
+  const user = extractUser(req, db);
+  const journey = findTargetJourney(db, req.params.id, user);
+
   if (!journey) {
     return res.status(404).json({ success: false, message: 'Journey not found' });
   }
@@ -193,7 +216,8 @@ exports.endJourney = (req, res) => {
 exports.addLocationUpdate = (req, res) => {
   const db = readDb();
   const user = extractUser(req, db);
-  const journey = db.journeys.find(j => j.id === req.params.id);
+  const journey = findTargetJourney(db, req.params.id, user);
+
   if (!journey) {
     return res.status(404).json({ success: false, message: 'Journey not found' });
   }
@@ -262,7 +286,10 @@ exports.addLocationUpdate = (req, res) => {
 // GET /api/journeys/:id/location
 exports.getJourneyLocations = (req, res) => {
   const db = readDb();
-  const locs = db.location_updates.filter(l => l.journey_id === req.params.id);
+  const user = extractUser(req, db);
+  const journey = findTargetJourney(db, req.params.id, user);
+  const targetId = journey ? journey.id : req.params.id;
+  const locs = db.location_updates.filter(l => l.journey_id === targetId);
   res.json({ success: true, locations: locs });
 };
 
@@ -271,7 +298,7 @@ exports.handleSafetyCheck = (req, res) => {
   const db = readDb();
   const user = extractUser(req, db);
   const { action, duration_mins, details } = req.body;
-  const journey = db.journeys.find(j => j.id === req.params.id);
+  const journey = findTargetJourney(db, req.params.id, user);
 
   if (!journey) {
     return res.status(404).json({ success: false, message: 'Journey not found' });
@@ -431,8 +458,9 @@ exports.handleSafetyCheck = (req, res) => {
 // POST /api/journeys/:id/safety-timeout
 exports.updateSafetyTimeout = (req, res) => {
   const db = readDb();
+  const user = extractUser(req, db);
   const { safety_timeout_mins } = req.body;
-  const journey = db.journeys.find(j => j.id === req.params.id);
+  const journey = findTargetJourney(db, req.params.id, user);
 
   if (!journey) {
     return res.status(404).json({ success: false, message: 'Journey not found' });
@@ -440,6 +468,7 @@ exports.updateSafetyTimeout = (req, res) => {
 
   const mins = parseInt(safety_timeout_mins) || 10;
   journey.safety_timeout_mins = mins;
+  journey.no_movement_threshold_mins = mins;
   writeDb(db);
   res.json({ success: true, journey, message: `Safety check popup timeout set to ${mins} minutes.` });
 };
@@ -448,7 +477,7 @@ exports.updateSafetyTimeout = (req, res) => {
 exports.triggerSOS = (req, res) => {
   const db = readDb();
   const user = extractUser(req, db);
-  const journey = db.journeys.find(j => j.id === req.params.id);
+  const journey = findTargetJourney(db, req.params.id, user);
 
   const locs = journey ? db.location_updates.filter(l => l.journey_id === journey.id) : [];
   const lastLoc = locs.length > 0 ? locs[locs.length - 1] : { latitude: 12.9715987, longitude: 77.5945627 };
@@ -505,6 +534,7 @@ exports.triggerSOS = (req, res) => {
   if (journey) {
     journey.risk_score = 100;
     journey.risk_level = 'RED';
+    journey.monitoring_status = 'EMERGENCY';
   }
 
   writeDb(db);
@@ -521,7 +551,7 @@ exports.triggerSOS = (req, res) => {
 exports.simulateOffline = (req, res) => {
   const db = readDb();
   const user = extractUser(req, db);
-  const journey = db.journeys.find(j => j.id === req.params.id);
+  const journey = findTargetJourney(db, req.params.id, user);
   if (!journey) {
     return res.status(404).json({ success: false, message: 'Journey not found' });
   }
@@ -550,7 +580,8 @@ exports.simulateOffline = (req, res) => {
 // POST /api/journeys/:id/simulation
 exports.setSimulationEvent = (req, res) => {
   const db = readDb();
-  const journey = db.journeys.find(j => j.id === req.params.id);
+  const user = extractUser(req, db);
+  const journey = findTargetJourney(db, req.params.id, user);
   if (!journey) {
     return res.status(404).json({ success: false, message: 'Journey not found' });
   }
