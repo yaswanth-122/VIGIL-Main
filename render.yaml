@@ -3,8 +3,8 @@ services:
     name: vigil-app
     env: node
     plan: free
-    buildCommand: npm install && cd backend && npm install && cd .. && cd frontend && npm install && npm run build && cd ..
-    startCommand: node backend/server.js
+    buildCommand: npm run build
+    startCommand: npm start
     healthCheckPath: /health
     envVars:
       - key: PORT

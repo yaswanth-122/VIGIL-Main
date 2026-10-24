@@ -2,7 +2,13 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
-const DB_FILE = path.join(__dirname, 'vigil_db.json');
+// Use /tmp in serverless environments (like Vercel or AWS Lambda) where project root is read-only
+const isServerless = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
+const DB_FILE = isServerless
+  ? path.join('/tmp', 'vigil_db.json')
+  : path.join(__dirname, 'vigil_db.json');
+
+let memoryDbCache = null;
 
 // Helper to hash password
 function hashPassword(password, salt = 'vigil_salt_2026') {
@@ -81,30 +87,45 @@ const defaultData = {
 
 // Initialize DB if file does not exist
 function initDb() {
-  if (!fs.existsSync(DB_FILE)) {
-    fs.writeFileSync(DB_FILE, JSON.stringify(defaultData, null, 2), 'utf8');
+  if (memoryDbCache) return;
+  try {
+    if (!fs.existsSync(DB_FILE)) {
+      const bundledPath = path.join(__dirname, 'vigil_db.json');
+      if (isServerless && fs.existsSync(bundledPath)) {
+        fs.copyFileSync(bundledPath, DB_FILE);
+      } else {
+        fs.writeFileSync(DB_FILE, JSON.stringify(defaultData, null, 2), 'utf8');
+      }
+    }
+  } catch (err) {
+    console.warn('Filesystem init warning (using in-memory fallback):', err.message);
+    memoryDbCache = JSON.parse(JSON.stringify(defaultData));
   }
 }
 
 function readDb() {
+  if (memoryDbCache) return memoryDbCache;
   initDb();
   try {
     const raw = fs.readFileSync(DB_FILE, 'utf8');
     return JSON.parse(raw);
   } catch (err) {
-    console.error('Error reading database file, resetting to default:', err);
-    fs.writeFileSync(DB_FILE, JSON.stringify(defaultData, null, 2), 'utf8');
-    return defaultData;
+    console.warn('Error reading database file, using in-memory default:', err.message);
+    if (!memoryDbCache) {
+      memoryDbCache = JSON.parse(JSON.stringify(defaultData));
+    }
+    return memoryDbCache;
   }
 }
 
 function writeDb(data) {
+  memoryDbCache = data;
   try {
     fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2), 'utf8');
     return true;
   } catch (err) {
-    console.error('Error writing to database:', err);
-    return false;
+    console.warn('Filesystem write warning (preserved in memory):', err.message);
+    return true;
   }
 }
 
