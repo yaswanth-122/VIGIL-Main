@@ -5,9 +5,9 @@
 
 // Simple robust fetch wrapper for Gemini API
 async function callGeminiAPI(promptText) {
-  const apiKey = process.env.GEMINI_API_KEY || process.env.VITE_GOOGLE_MAPS_API_KEY || '';
+  const apiKey = process.env.GEMINI_API_KEY || '';
 
-  if (!apiKey) {
+  if (!apiKey || apiKey === 'your_gemini_key') {
     return null; // Fallback to local intelligent synthesis
   }
 
